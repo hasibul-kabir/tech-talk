@@ -13,10 +13,10 @@ const FriendList = () => {
     useEffect(() => {
         async function fetchFriend() {
             const auth = getAuth();
-            const friendListArr = []
             const friendRef = ref(db, 'friendList/');
 
             onValue(friendRef, (snapshot) => {
+                const friendListArr = []
                 snapshot.forEach((info) => {
                     if (auth.currentUser.uid === info.val().receiverId || auth.currentUser.uid === info.val().senderId) {
                         friendListArr.push(info.val());
@@ -27,7 +27,7 @@ const FriendList = () => {
         }
         fetchFriend()
 
-    }, [db])
+    }, [])
 
 
     //Block 
@@ -38,24 +38,23 @@ const FriendList = () => {
             closerName: auth.currentUser.displayName,
             blockedId: blockedId,
             blockedName: blockedName
-        }).then(() => setChanged(!changed))
+        })
     }
 
     //getBlockedFriend
     useEffect(() => {
-        const blockedArr = []
         const db = getDatabase();
         onValue(ref(db, 'blocked/'), (snapshot) => {
+            const blockedArr = []
             snapshot.forEach((info) => {
                 if (auth.currentUser.uid == info.val().closerId) {
                     blockedArr.push(info.val().blockedId)
-                    setBlockedFriends(blockedArr)
                 }
             })
+            setBlockedFriends(blockedArr)
 
         });
-    }, [changed])
-
+    }, [])
 
 
     return (

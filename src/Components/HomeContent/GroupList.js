@@ -12,7 +12,6 @@ const GroupList = () => {
     const [open, setOpen] = useState();
     const [loading, setLoading] = useState(false);
     const [groupData, setGroupData] = useState([]);
-    const [change, setChange] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -23,8 +22,8 @@ const GroupList = () => {
     console.log(auth.currentUser);
     //fetch groups
     useEffect(() => {
-        const arr = []
         onValue(ref(db, 'groups/'), (snapshot) => {
+            const arr = []
             // const data = snapshot.val();
             snapshot.forEach(element => {
                 element.val().adminId != auth.currentUser.uid &&
@@ -35,12 +34,10 @@ const GroupList = () => {
                         adminName: element.val().adminName,
                         adminId: element.val().adminId
                     })
-                setGroupData(arr)
-                // setChange(!change)
             });
+            setGroupData(arr)
         });
     }, [])
-    console.log("groupData", groupData);
 
     //create group
     const handleCreateGroup = (e) => {

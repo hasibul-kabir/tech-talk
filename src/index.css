@@ -962,6 +962,7 @@ ol {
     height: 480px;
     padding: 0 10px;
     overflow-y: scroll;
+    border-bottom: 2px solid #b1ababaf;
 }
 
 .chat .conversations .message {
@@ -978,4 +979,68 @@ ol {
     line-height: 24px;
     letter-spacing: 0em;
     border-radius: 5px;
+}
+
+.chat .bottom {
+    padding: 10px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat .bottom .msg-input {
+    width: 90%;
+    position: relative;
+}
+
+.chat .bottom .msg-input .icons {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    display: inline;
+}
+
+.chat .bottom .msg-input .icons .fileIcon {
+    color: #9c9c9c;
+}
+
+.chat .bottom .msg-input .icons .emojiIcon {
+    color: #9c9c9c;
+}
+
+.chat .bottom .msg-input input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: #F1F1F1;
+    border-radius: 10px;
+    padding: 5px 60px 5px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.chat .bottom .msg-input input::placeholder {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.chat .bottom .msg-btn button {
+    height: 40px;
+    width: 40px;
+    border: none;
+    border-radius: 10px;
+    background: #5F35F5;
+    transition: .4s;
+}
+
+.chat .bottom .msg-btn button:hover {
+    background: #492ab9;
+}
+
+.chat .bottom .msg-btn button .btnIcon {
+    color: #fafafa;
+    padding: 3px;
 }

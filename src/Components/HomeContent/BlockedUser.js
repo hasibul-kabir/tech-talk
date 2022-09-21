@@ -9,11 +9,10 @@ const BlockedUser = () => {
 
     //Fetch blocked friends
     useEffect(() => {
-        const blockedArr = []
         const db = getDatabase();
         onValue(ref(db, 'blocked/'), (snapshot) => {
+            const blockedArr = []
             snapshot.forEach((info) => {
-                console.log("info", info.key);
                 if (auth.currentUser.uid == info.val().closerId) {
                     blockedArr.push({
                         key: info.key,
@@ -22,15 +21,15 @@ const BlockedUser = () => {
                         blockedId: info.val().blockedId,
                         blockedName: info.val().blockedName
                     })
-                    setBlockedFriends(blockedArr)
                 }
             })
+            setBlockedFriends(blockedArr)
         });
-    }, [changed])
-    console.log("BLOCKED_FRIENDS", blockedFriends);
+    }, [])
+
     const handleUnblock = (key) => {
         const db = getDatabase();
-        remove(ref(db, 'blocked/' + key)).then(() => setChanged(!changed))
+        remove(ref(db, 'blocked/' + key))
     }
     return (
         <div className='blocked-users'>

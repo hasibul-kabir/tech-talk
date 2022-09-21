@@ -1,7 +1,8 @@
 import React from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 let receive = {
     background: '#f1f1f1',
@@ -62,7 +63,20 @@ const Chat = () => {
                     <p style={send} >Hi! Having Fun</p>
                 </div>
             </div>
-            <div className='bottom'>Bottom</div>
+            <div className='bottom'>
+                <div className='msg-input'>
+                    <input
+                        placeholder='Send Message'
+                    />
+                    <div className='icons'>
+                        <AttachFileIcon className='fileIcon' />
+                        <EmojiEmotionsIcon className='emojiIcon' />
+                    </div>
+                </div>
+                <div className='msg-btn'>
+                    <button><SendIcon className='btnIcon' /></button>
+                </div>
+            </div>
         </div>
     )
 }
