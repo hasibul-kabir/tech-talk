@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { useDispatch } from 'react-redux'
+import { activeChat } from '../../Redux/chatSlice';
 
-const FriendList = () => {
+const FriendList = (props) => {
+    const dispatch = useDispatch()
     const db = getDatabase();
     const auth = getAuth();
     const [friendList, setFriendList] = useState([]);
     const [blockedFriends, setBlockedFriends] = useState([]);
-    const [changed, setChanged] = useState(false);
 
     //fetch friend list
     useEffect(() => {
@@ -56,6 +58,20 @@ const FriendList = () => {
         });
     }, [])
 
+    //set the person to chat on redux
+    const handleActiveChatPerson = (friend) => {
+        const activeChatPerson = {}
+        if (friend.senderId === auth.currentUser.uid) {
+            activeChatPerson.id = friend.receiverId
+            activeChatPerson.name = friend.receiverName
+        } else if (friend.receiverId === auth.currentUser.uid) {
+            activeChatPerson.id = friend.senderId
+            activeChatPerson.name = friend.senderName
+        } else {
+            activeChatPerson = null
+        }
+        dispatch(activeChat(activeChatPerson))
+    }
 
     return (
         <div className='friend-list'>
@@ -66,7 +82,7 @@ const FriendList = () => {
                 friendList.length > 0 &&
 
                 friendList.map((friend) => (
-                    <div className='box' >
+                    <div className='box' onClick={() => handleActiveChatPerson(friend)} >
                         <div className='friend-img'>
                             <img src="./assets/images/Ellipse 2.png" alt=""></img>
                         </div>
@@ -77,10 +93,16 @@ const FriendList = () => {
                         <div className='time' >
                             {/* <p>{friend.date}</p> */}
                             {
-                                blockedFriends.includes(friend.senderId) || blockedFriends.includes(friend.receiverId) ?
-                                    <button>Blocked</button>
+                                props.term === "home" ?
+
+                                    blockedFriends.includes(friend.senderId) || blockedFriends.includes(friend.receiverId) ?
+                                        <button>Blocked</button>
+                                        :
+                                        <button onClick={() => handleBlock(auth.currentUser.uid === friend.senderId ? friend.receiverName : friend.senderName, auth.currentUser.uid === friend.senderId ? friend.receiverId : friend.senderId)} >Block</button>
                                     :
-                                    <button onClick={() => handleBlock(auth.currentUser.uid === friend.senderId ? friend.receiverName : friend.senderName, auth.currentUser.uid === friend.senderId ? friend.receiverId : friend.senderId)} >Block</button>
+                                    props.term === "msg" &&
+
+                                    <p>{friend.date}</p>
                             }
 
                         </div>

@@ -1,4 +1,6 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -22,62 +24,72 @@ let alignRight = {
 
 
 const Chat = () => {
+    const count = useSelector((state) => state.activeChat.value)
+
     return (
-        <div className='chat'>
-            <div className='top-part'>
-                <div className='identity'>
-                    <div className='identity-img'>
-                        <img src='./assets/images/profile_image.jpg' />
-                        <div className='status'></div>
+        <>
+            {count ? (
+                <div className='chat'>
+                    <div className='top-part'>
+                        <div className='identity'>
+                            <div className='identity-img'>
+                                <img src='./assets/images/profile_image.jpg' />
+                                <div className='status'></div>
+                            </div>
+                            <div className='identity-txt'>
+                                <h3>{count.name}</h3>
+                                <p>Online</p>
+                            </div>
+                        </div>
+                        <div className='sign'><MoreVertIcon /></div>
                     </div>
-                    <div className='identity-txt'>
-                        <h3>My Name</h3>
-                        <p>Online</p>
+                    <div className='conversations'>
+                        <div className='message' style={alignLeft}>
+                            <p style={receive}>Hello! How are you? Hello! How are you?</p>
+                        </div>
+                        <div className='message' style={alignRight}>
+                            <p style={send} >Hi!</p>
+                        </div>
+                        <div className='message' style={alignLeft}>
+                            <p style={receive}>Hello! How are you? Hello! How are you?</p>
+                        </div>
+                        <div className='message' style={alignRight}>
+                            <p style={send} >Hi!</p>
+                        </div>
+                        <div className='message' style={alignLeft}>
+                            <p style={receive}>Hello! How are you? Hello! How are you?</p>
+                        </div>
+                        <div className='message' style={alignRight}>
+                            <p style={send} >Hi!</p>
+                        </div>
+                        <div className='message' style={alignRight}>
+                            <p style={send} >Hi!</p>
+                        </div>
+                        <div className='message' style={alignRight}>
+                            <p style={send} >Hi! Having Fun</p>
+                        </div>
                     </div>
-                </div>
-                <div className='sign'><MoreVertIcon /></div>
-            </div>
-            <div className='conversations'>
-                <div className='message' style={alignLeft}>
-                    <p style={receive}>Hello! How are you? Hello! How are you?</p>
-                </div>
-                <div className='message' style={alignRight}>
-                    <p style={send} >Hi!</p>
-                </div>
-                <div className='message' style={alignLeft}>
-                    <p style={receive}>Hello! How are you? Hello! How are you?</p>
-                </div>
-                <div className='message' style={alignRight}>
-                    <p style={send} >Hi!</p>
-                </div>
-                <div className='message' style={alignLeft}>
-                    <p style={receive}>Hello! How are you? Hello! How are you?</p>
-                </div>
-                <div className='message' style={alignRight}>
-                    <p style={send} >Hi!</p>
-                </div>
-                <div className='message' style={alignRight}>
-                    <p style={send} >Hi!</p>
-                </div>
-                <div className='message' style={alignRight}>
-                    <p style={send} >Hi! Having Fun</p>
-                </div>
-            </div>
-            <div className='bottom'>
-                <div className='msg-input'>
-                    <input
-                        placeholder='Send Message'
-                    />
-                    <div className='icons'>
-                        <AttachFileIcon className='fileIcon' />
-                        <EmojiEmotionsIcon className='emojiIcon' />
+                    <div className='bottom'>
+                        <div className='msg-input'>
+                            <input
+                                placeholder='Send Message'
+                            />
+                            <div className='icons'>
+                                <AttachFileIcon className='fileIcon' />
+                                <EmojiEmotionsIcon className='emojiIcon' />
+                            </div>
+                        </div>
+                        <div className='msg-btn'>
+                            <button><SendIcon className='btnIcon' /></button>
+                        </div>
                     </div>
+                </div>)
+                :
+                <div className='nochat' style={{ "height": "660px", "display": "flex", "justifyContent": "center", "alignItems": "center" }}>
+                    <img style={{ "height": "400px", "width": "auto" }} src="./assets/images/noMessage.jpg" />
                 </div>
-                <div className='msg-btn'>
-                    <button><SendIcon className='btnIcon' /></button>
-                </div>
-            </div>
-        </div>
+            }
+        </>
     )
 }
 

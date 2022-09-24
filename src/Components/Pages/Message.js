@@ -49,7 +49,7 @@ const Message = () => {
                     <Grid item xs={4}>
                         <Search />
                         <GroupList />
-                        <FriendReq />
+                        <FriendList term="msg" />
                     </Grid>
                     <Grid item xs={6}>
                         <Chat />

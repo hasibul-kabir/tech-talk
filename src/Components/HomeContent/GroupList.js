@@ -19,7 +19,6 @@ const GroupList = () => {
     const db = getDatabase();
 
 
-    console.log(auth.currentUser);
     //fetch groups
     useEffect(() => {
         onValue(ref(db, 'groups/'), (snapshot) => {

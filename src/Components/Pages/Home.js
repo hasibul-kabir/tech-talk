@@ -55,7 +55,7 @@ const Home = () => {
                             <FriendReq />
                         </Grid>
                         <Grid item xs={3}>
-                            <FriendList />
+                            <FriendList term="home" />
                             <MyGroups />
                         </Grid>
                         <Grid item xs={3}>
