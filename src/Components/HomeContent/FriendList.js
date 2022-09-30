@@ -82,7 +82,7 @@ const FriendList = (props) => {
                 friendList.length > 0 &&
 
                 friendList.map((friend) => (
-                    <div className='box' onClick={() => handleActiveChatPerson(friend)} >
+                    <div className='box' style={{ 'cursor': 'pointer' }} onClick={() => handleActiveChatPerson(friend)} >
                         <div className='friend-img'>
                             <img src="./assets/images/Ellipse 2.png" alt=""></img>
                         </div>

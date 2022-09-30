@@ -967,6 +967,18 @@ ol {
 
 .chat .conversations .message {
     display: flex;
+    position: relative;
+}
+
+.chat .conversations .message span {
+    position: absolute;
+    bottom: 0;
+    font-family: Poppins;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 10px;
+    letter-spacing: 0em;
+    color: #929292;
 }
 
 .chat .conversations .message p {
@@ -979,6 +991,12 @@ ol {
     line-height: 24px;
     letter-spacing: 0em;
     border-radius: 5px;
+}
+
+.chat .conversations .message img {
+    max-width: 300px;
+    max-height: auto;
+    margin: 20px 0;
 }
 
 .chat .bottom {
