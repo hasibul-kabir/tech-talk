@@ -5,6 +5,7 @@ import Registration from './Components/Pages/Registration';
 import Login from './Components/Pages/Login';
 import Home from './Components/Pages/Home';
 import Message from './Components/Pages/Message';
+import ResetPass from './Components/ResetPass';
 import { useSelector } from 'react-redux';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path='/registration' element={<Registration />} ></Route>
             <Route path='/home' element={<Home />} ></Route>
             <Route path='/message' element={<Message />} ></Route>
+            <Route path='/resetpass' element={<ResetPass />} ></Route>
           </Routes>
         </BrowserRouter>
       </div>

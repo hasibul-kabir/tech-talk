@@ -3,7 +3,7 @@ import { Alert, Grid, TextField, IconButton, Collapse } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
     const [open, setOpen] = React.useState(true);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     let [email, setEmail] = useState('')
     let [pass, setPass] = useState('')
@@ -85,6 +86,7 @@ const Login = () => {
         setTypePass(!typePass)
     }
 
+
     return (
         <>
             <section className='login'>
@@ -128,6 +130,29 @@ const Login = () => {
                                         </Collapse>
                                         : ""
                                 }
+                                {
+                                    location.state != null &&
+                                    <Collapse in={open}>
+                                        <Alert
+                                            severity="info"
+                                            action={
+                                                <IconButton
+                                                    aria-label="close"
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={() => {
+                                                        setOpen(false);
+                                                    }}
+                                                >
+                                                    <CloseIcon fontSize="small" />
+                                                </IconButton>
+                                            }
+                                            sx={{ mb: 2 }}
+                                        >
+                                            {location.state.message}
+                                        </Alert>
+                                    </Collapse>
+                                }
 
 
                                 <form>
@@ -156,6 +181,8 @@ const Login = () => {
                                     <button className='signin-btn' onClick={handleSubmit} >Sign in</button>
                                 </form>
                                 <p className='redirectlink'>Don’t have an account ? <Link to="/registration">Sign up</Link> </p>
+
+                                <p className='forgot-pass'>Forgot password ? <Link to="/resetpass">reset</Link> </p>
 
                             </div>
                         </div>

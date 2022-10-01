@@ -194,6 +194,22 @@ ol {
     text-decoration: none;
 }
 
+.forgot-pass {
+    margin-top: 25px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-left: 6rem;
+}
+
+.forgot-pass a {
+    font-weight: 800;
+    color: #EA6C00;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 
 .menu {
     height: 100vh;
@@ -1070,6 +1086,62 @@ ol {
 .chat .bottom .msg-btn button .btnIcon {
     color: #fafafa;
     padding: 3px;
+}
+
+/* RESET PASSWORD */
+.reset-pass {
+    height: 100vh;
+    background: #5F35F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.reset-pass h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: #F1F1F1;
+}
+
+.reset-pass .reset-form {
+    margin-top: 50px;
+    padding: 50px 50px;
+    background: #F1F1F1;
+    border-radius: 5px;
+}
+
+.reset-pass .reset-form h4 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.reset-pass .reset-form input {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    background: #dddddd;
+}
+
+.reset-pass .reset-form .btn {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.reset-pass .reset-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    background: #5F35F5;
+    font-size: 18px;
+    font-weight: 600;
+    color: #F1F1F1;
 }
 
 /* DARK MODE */
