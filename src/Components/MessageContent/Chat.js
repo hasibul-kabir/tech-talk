@@ -15,8 +15,8 @@ import CircularProgressWithLabel from '../ProgressSpinner'
 
 
 let receive = {
-    background: '#f1f1f1',
-    color: '#464545;'
+    background: '#4E4F50',
+    color: '#fff'
 }
 let send = {
     background: '#3d4aff',

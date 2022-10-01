@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { dmode } from '../Redux/dmodeSlice';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -7,6 +10,8 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
@@ -17,9 +22,10 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 const MenuBar = ({ active, userName }) => {
-    const [change, setChange] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [image, setImage] = useState(null)
+    const [darkmode, setDarkmode] = useState(true);
+    const [change, setChange] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(null);
     const [cropper, setCropper] = useState();
     //modal
     const [open, setOpen] = useState(false);
@@ -29,6 +35,8 @@ const MenuBar = ({ active, userName }) => {
     const navigate = useNavigate();
     const auth = getAuth();
     const storage = getStorage();
+    const dispatch = useDispatch();
+    const dMode = useSelector((state) => state.dmode.value);
 
     //get current user data
     useEffect(() => {
@@ -91,9 +99,19 @@ const MenuBar = ({ active, userName }) => {
     };
 
 
+    //DARK MODE STATE CHANGE
+    const handleDarkMode = () => {
+        dispatch(dmode(darkmode))
+        setDarkmode(!darkmode)
+    }
+
     return (
         <>
             <div className='menu'>
+
+                {
+                    dMode ? <WbSunnyIcon style={{ 'color': 'white' }} className='mode' onClick={handleDarkMode} /> : <DarkModeIcon className='mode' onClick={handleDarkMode} />
+                }
                 <div className='overlay' onClick={handleOpen}><CameraAltOutlinedIcon className='upload-image' /></div>
                 {
                     !auth.currentUser.photoURL ?

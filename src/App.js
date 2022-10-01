@@ -5,18 +5,22 @@ import Registration from './Components/Pages/Registration';
 import Login from './Components/Pages/Login';
 import Home from './Components/Pages/Home';
 import Message from './Components/Pages/Message';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const dMode = useSelector((state) => state.dmode.value);
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />} ></Route>
-          <Route path='/registration' element={<Registration />} ></Route>
-          <Route path='/home' element={<Home />} ></Route>
-          <Route path='/message' element={<Message />} ></Route>
-        </Routes>
-      </BrowserRouter>
+      <div className={dMode && "darkmode"}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Login />} ></Route>
+            <Route path='/registration' element={<Registration />} ></Route>
+            <Route path='/home' element={<Home />} ></Route>
+            <Route path='/message' element={<Message />} ></Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }

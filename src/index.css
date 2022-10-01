@@ -201,6 +201,15 @@ ol {
     border-radius: 20px;
     margin: 20px;
     text-align: center;
+
+    position: relative;
+}
+
+.menu .mode {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
 }
 
 .menu .profile-pic {
@@ -1061,4 +1070,23 @@ ol {
 .chat .bottom .msg-btn button .btnIcon {
     color: #fafafa;
     padding: 3px;
+}
+
+/* DARK MODE */
+.darkmode {
+    background: #212121;
+    color: #fafafa;
+}
+
+.darkmode .active {
+    background: #212121 !important;
+}
+
+.darkmode p {
+    color: #e7e7e7 !important;
+}
+
+.darkmode .search input {
+    background: #212121 !important;
+    color: #e7e7e7;
 }
