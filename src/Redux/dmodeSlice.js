@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const dmodeSlice = createSlice({
     name: 'dmode',
     initialState: {
-        value: null
+        value: false
     },
     reducers: {
-        dmode: (state, action) => {
-            state.value = action.payload
+        dmode: (state) => {
+            state.value = !state.value
         }
     }
 })

@@ -22,7 +22,6 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 const MenuBar = ({ active, userName }) => {
-    const [darkmode, setDarkmode] = useState(true);
     const [change, setChange] = useState(false);
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
@@ -101,8 +100,7 @@ const MenuBar = ({ active, userName }) => {
 
     //DARK MODE STATE CHANGE
     const handleDarkMode = () => {
-        dispatch(dmode(darkmode))
-        setDarkmode(!darkmode)
+        dispatch(dmode())
     }
 
     return (
