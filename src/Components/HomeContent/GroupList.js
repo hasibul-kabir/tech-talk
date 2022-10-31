@@ -12,6 +12,7 @@ const GroupList = () => {
     const [open, setOpen] = useState();
     const [loading, setLoading] = useState(false);
     const [groupData, setGroupData] = useState([]);
+    const [groupMems, setGroupMems] = useState([]);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -23,9 +24,8 @@ const GroupList = () => {
     useEffect(() => {
         onValue(ref(db, 'groups/'), (snapshot) => {
             const arr = []
-            // const data = snapshot.val();
             snapshot.forEach(element => {
-                element.val().adminId != auth.currentUser.uid &&
+                if (element.val().adminId != auth.currentUser.uid) {
                     arr.push({
                         groupName: element.val().groupName,
                         groupId: element.key,
@@ -33,6 +33,7 @@ const GroupList = () => {
                         adminName: element.val().adminName,
                         adminId: element.val().adminId
                     })
+                }
             });
             setGroupData(arr)
         });
@@ -66,6 +67,22 @@ const GroupList = () => {
             senderPhoto: auth.currentUser.photoURL
         })
     }
+
+    //Frtch Group Members
+    useEffect(() => {
+        onValue(ref(db, 'groupMember/'), (snapshot) => {
+            let arr = [];
+            snapshot.forEach(element => {
+                if (element.val().senderId === auth.currentUser.uid) {
+                    arr.push(element.val().groupId)
+                } else {
+                    return
+                }
+
+            });
+            setGroupMems(arr);
+        });
+    }, [])
 
 
     return (
@@ -123,6 +140,7 @@ const GroupList = () => {
                 </div>
                 {
                     groupData.map((group) => (
+                        !groupMems.includes(group.groupId) &&
                         <div className='box' >
                             <div className='group-img'>
                                 <img src="./assets/images/Ellipse 2.png" alt=""></img>

@@ -63,45 +63,81 @@ const Chat = () => {
     const [img, setImg] = useState();
     const [progress, setProgress] = useState();
     const [msgInfo, setMsgInfo] = useState([]);
+    const [groupMsgInfo, setGroupMsgInfo] = useState([]);
     const user = useSelector((state) => state.activeChat.value);
     const auth = getAuth();
     const storage = getStorage();
 
     //SEND IMAGE
     const handleSendImg = () => {
-        const storageRef = sref(storage, 'singleChatImg/' + img.name);
-        const uploadTask = uploadBytesResumable(storageRef, img);
+        if (user.status === 'singleChat') {
+            const storageRef = sref(storage, 'singleChatImg/' + img.name);
+            const uploadTask = uploadBytesResumable(storageRef, img);
 
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                // Observe state change events such as progress, pause, and resume
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + Math.round(progress) + '% done');
-                setProgress(Math.round(progress))
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + Math.round(progress) + '% done');
+                    setProgress(Math.round(progress))
 
-            },
-            (error) => {
-                // Handle unsuccessful uploads
-            },
-            () => {
-                // Handle successful uploads on complete
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    const db = getDatabase();
-                    const date = new Date();
-                    if (img != "") {
-                        set(push(ref(db, 'singleMessage/')), {
-                            senderId: auth.currentUser.uid,
-                            senderName: auth.currentUser.displayName,
-                            receiverId: user.id,
-                            receiverName: user.name,
-                            image: downloadURL,
-                            time: new Date().toLocaleString()
-                        })
-                    }
-                }).then(() => setOpen(false));
-            }
-        );
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                },
+                () => {
+                    // Handle successful uploads on complete
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        const db = getDatabase();
+                        if (img != "") {
+                            set(push(ref(db, 'singleMessage/')), {
+                                senderId: auth.currentUser.uid,
+                                senderName: auth.currentUser.displayName,
+                                receiverId: user.id,
+                                receiverName: user.name,
+                                image: downloadURL,
+                                time: new Date().toLocaleString()
+                            })
+                        }
+                    }).then(() => setOpen(false));
+                }
+            );
+        }
+        else if (user.status === 'groupChat') {
+            const storageRef = sref(storage, 'groupChatImg/' + img.name);
+            const uploadTask = uploadBytesResumable(storageRef, img);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + Math.round(progress) + '% done');
+                    setProgress(Math.round(progress))
+
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                },
+                () => {
+                    // Handle successful uploads on complete
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        const db = getDatabase();
+                        if (img != "") {
+                            set(push(ref(db, 'groupMessage/')), {
+                                senderId: auth.currentUser.uid,
+                                senderName: auth.currentUser.displayName,
+                                receiverId: user.groupId,
+                                receiverName: user.groupName,
+                                image: downloadURL,
+                                time: new Date().toLocaleString()
+                            })
+                        }
+                    }).then(() => setOpen(false));
+                }
+            );
+        }
     };
 
 
@@ -110,23 +146,33 @@ const Chat = () => {
     const handleSendMessage = () => {
         const db = getDatabase();
         if (message != "") {
-            set(push(ref(db, 'singleMessage/')), {
-                senderId: auth.currentUser.uid,
-                senderName: auth.currentUser.displayName,
-                receiverId: user.id,
-                receiverName: user.name,
-                message: message,
-                time: new Date().toLocaleString()
-            }).then(() => {
-                setMessage('')
-            })
+            if (user.status === 'singleChat') {
+                set(push(ref(db, 'singleMessage/')), {
+                    senderId: auth.currentUser.uid,
+                    senderName: auth.currentUser.displayName,
+                    receiverId: user.id,
+                    receiverName: user.name,
+                    message: message,
+                    time: new Date().toLocaleString()
+                }).then(() => {
+                    setMessage('')
+                })
+            } else if (user.status === 'groupChat') {
+                set(push(ref(db, 'groupMessage/')), {
+                    senderId: auth.currentUser.uid,
+                    senderName: auth.currentUser.displayName,
+                    receiverId: user.groupId,
+                    receiverName: user.groupName,
+                    message: message,
+                    time: new Date().toLocaleString()
+                }).then(() => {
+                    setMessage('')
+                })
+            }
         }
     }
-    // const date = new Date();
-    //  let d = date.getHours();
-    // let mmnt = moment().startOf(`${date.getHours()}`).fromNow();
-    // console.log(mmnt);
-    //SHOW MESSAGE
+
+    //FETCH SINGLE MESSAGE
     useEffect(() => {
         const db = getDatabase();
         const messageRef = ref(db, 'singleMessage/');
@@ -144,6 +190,24 @@ const Chat = () => {
         });
     }, [user])
 
+    //FETCH GROUP MESSAGE
+    useEffect(() => {
+        const db = getDatabase();
+        const messageRef = ref(db, 'groupMessage/');
+
+        onValue(messageRef, (snapshot) => {
+            let msgInfo = [];
+            snapshot.forEach((element) => {
+                if (element.val().senderId === auth.currentUser.uid && element.val().receiverId === user.groupId
+                    ||
+                    element.val().senderId !== auth.currentUser.uid && element.val().receiverId === user.groupId) {
+                    msgInfo.push(element.val())
+                }
+            })
+            setGroupMsgInfo(msgInfo);
+        });
+    }, [user])
+
 
     return (
         <>
@@ -156,14 +220,15 @@ const Chat = () => {
                                 <div className='status'></div>
                             </div>
                             <div className='identity-txt'>
-                                <h3>{user.name}</h3>
+                                <h3>{user.name ? user.name : user.groupName ? user.groupName : null}</h3>
                                 <p>Online</p>
                             </div>
                         </div>
                         <div className='sign'><MoreVertIcon /></div>
                     </div>
                     <div className='conversations'>
-                        {
+                        {user.status === 'singleChat' ?
+                            // singleChat
                             msgInfo.map((element) => (
                                 element.senderId === auth.currentUser.uid ? (
                                     <div className='message' style={alignRight}>
@@ -179,14 +244,54 @@ const Chat = () => {
                                     (
                                         <div className='message' style={alignLeft}>
                                             {element.message ?
-                                                <p style={receive}>{element.message}</p>
+                                                <>
+                                                    <span className='name'>{element.senderName}</span>
+                                                    <p style={receive}>{element.message}</p>
+                                                </>
                                                 :
-                                                <img src={element.image} />
+                                                <>
+                                                    <span className='name'>{element.senderName}</span>
+                                                    <img src={element.image} />
+                                                </>
                                             }
                                             <span>{moment(element.time).fromNow()}</span>
                                         </div>
                                     )
                             ))
+                            :
+                            //groupChat
+                            groupMsgInfo.map((element) => (
+                                element.senderId === auth.currentUser.uid ? (
+                                    <div className='message' style={alignRight}>
+                                        {
+                                            element.message ?
+                                                <p style={send} >{element.message}</p>
+                                                :
+                                                <img src={element.image} />
+                                        }
+                                        <span>{moment(element.time).fromNow()}</span>
+                                    </div>
+                                )
+                                    :
+                                    (
+                                        <div className='message' style={alignLeft}>
+                                            {
+                                                element.message ?
+                                                    <>
+                                                        <span className='name'>{element.senderName}</span>
+                                                        <p style={receive}>{element.message}</p>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <span className='name'>{element.senderName}</span>
+                                                        <img src={element.image} />
+                                                    </>
+                                            }
+                                            <span>{moment(element.time).fromNow()}</span>
+                                        </div>
+                                    )
+                            ))
+
                         }
 
                     </div>

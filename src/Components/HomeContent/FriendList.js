@@ -62,9 +62,11 @@ const FriendList = (props) => {
     const handleActiveChatPerson = (friend) => {
         const activeChatPerson = {}
         if (friend.senderId === auth.currentUser.uid) {
+            activeChatPerson.status = 'singleChat'
             activeChatPerson.id = friend.receiverId
             activeChatPerson.name = friend.receiverName
         } else if (friend.receiverId === auth.currentUser.uid) {
+            activeChatPerson.status = 'singleChat'
             activeChatPerson.id = friend.senderId
             activeChatPerson.name = friend.senderName
         } else {

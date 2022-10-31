@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 import MenuBar from "../MenuBar";
 import Search from "../HomeContent/Search";
-import GroupList from "../HomeContent/GroupList";
-import FriendReq from "../HomeContent/FriendReq";
 import FriendList from "../HomeContent/FriendList";
 import Chat from '../MessageContent/Chat';
+import ChatGroup from '../MessageContent/ChatGroup';
 
 const Message = () => {
     const auth = getAuth();
@@ -48,7 +47,7 @@ const Message = () => {
                     </Grid>
                     <Grid item xs={4}>
                         <Search />
-                        <GroupList />
+                        <ChatGroup />
                         <FriendList term="msg" />
                     </Grid>
                     <Grid item xs={6}>
