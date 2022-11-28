@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { getAuth } from "firebase/auth";
 import { getDatabase, push, ref, set, onValue } from "firebase/database";
 import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
+import ChatMenu from './ChatMenu';
+import MenuModal from './MenuModal';
 import moment from 'moment/moment';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
@@ -56,8 +57,11 @@ const modalButton = {
 
 const Chat = () => {
     const [open, setOpen] = useState(false);
+    const [openMenuModal, setOpenMenuModal] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleOpenMenuModal = () => setOpenMenuModal(true);
+    const handleCloseMenuModal = () => setOpenMenuModal(false);
 
     const [message, setMessage] = useState('');
     const [img, setImg] = useState();
@@ -224,7 +228,7 @@ const Chat = () => {
                                 <p>Online</p>
                             </div>
                         </div>
-                        <div className='sign'><MoreVertIcon /></div>
+                        <div className='sign'><ChatMenu handleOpenMenuModal={handleOpenMenuModal} /></div>
                     </div>
                     <div className='conversations'>
                         {user.status === 'singleChat' ?
@@ -335,6 +339,9 @@ const Chat = () => {
                     <button style={modalButton} onClick={handleSendImg} >SEND</button>
                 </Box>
             </Modal>
+
+            {/* //MENU Modal// */}
+            <MenuModal handleCloseMenuModal={handleCloseMenuModal} openMenuModal={openMenuModal} />
         </>
     )
 }

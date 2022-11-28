@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Badge from '@mui/material/Badge';
 
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
@@ -36,6 +37,7 @@ const MenuBar = ({ active, userName }) => {
     const storage = getStorage();
     const dispatch = useDispatch();
     const dMode = useSelector((state) => state.dmode.value);
+    const notificationLength = useSelector((state) => state.notification.value);
 
     //get current user data
     useEffect(() => {
@@ -127,10 +129,14 @@ const MenuBar = ({ active, userName }) => {
                             <Link to='/message'><SmsOutlinedIcon className='icon' /></Link>
                         </li>
                         <li className={active === "notification" ? "active" : undefined}>
-                            <NotificationsOutlinedIcon className='icon' />
+                            <Link to='/notification'>
+                                <Badge badgeContent={notificationLength} color="primary">
+                                    <NotificationsOutlinedIcon className='icon' />
+                                </Badge>
+                            </Link>
                         </li>
-                        <li className={active === "settings" ? "active" : undefined}>
-                            <SettingsOutlinedIcon className='icon' />
+                        <li className={active === "settigns" ? "active" : undefined}>
+                            <Link to='/settings'><SettingsOutlinedIcon className='icon' /></Link>
                         </li>
                         <li className='logout' onClick={handleLogout}>
                             <ExitToAppOutlinedIcon className='icon' />

@@ -27,7 +27,7 @@ const Home = () => {
             if (user) {
                 // const uid = user.uid;
                 console.log(user);
-                const { emailVerified, email, displayName } = user
+                const { emailVerified, displayName } = user
                 setUserName(displayName)
                 setVarifiedEmail(emailVerified)
                 // setUser(email)
@@ -40,7 +40,7 @@ const Home = () => {
             }
         });
 
-    })
+    }, [])
     return (
         <>
             {

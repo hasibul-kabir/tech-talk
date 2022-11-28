@@ -1,28 +1,24 @@
 import React from 'react'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Grid, Alert, AlertTitle } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MenuBar from "../MenuBar";
-import Search from "../HomeContent/Search";
-import FriendList from "../HomeContent/FriendList";
-import Chat from '../MessageContent/Chat';
-import ChatGroup from '../MessageContent/ChatGroup';
-
-const Message = () => {
+import ProfileSettigns from '../SettignsContent/ProfileSettigns';
+const Settings = () => {
     const auth = getAuth();
     const navigate = useNavigate();
 
     let [user, setUser] = useState();
-    let [userName, setUserName] = useState()
+    let [userName, setUserName] = useState();
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // const uid = user.uid;
                 // console.log(user);
-                const { emailVerified, email, displayName } = user
+                const { displayName } = user
                 setUser(user)
                 setUserName(displayName)
                 // setVarifiedEmail(emailVerified)
@@ -36,23 +32,19 @@ const Message = () => {
             }
         });
     }, [])
-
-
     return (
         <>
             {
                 user &&
                 <Grid container spacing={4}>
                     <Grid item xs={2}>
-                        <MenuBar active="message" userName={userName} />
+                        <MenuBar active="settigns" userName={userName} />
                     </Grid>
-                    <Grid item xs={4}>
-                        <Search />
-                        <ChatGroup />
-                        <FriendList term="msg" />
+                    <Grid item xs={5}>
+                        <ProfileSettigns />
                     </Grid>
-                    <Grid item xs={6}>
-                        <Chat />
+                    <Grid item xs={5}>
+
                     </Grid>
                 </Grid>
 
@@ -62,4 +54,4 @@ const Message = () => {
     )
 }
 
-export default Message
+export default Settings

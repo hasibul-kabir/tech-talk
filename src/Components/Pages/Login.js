@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Alert, Grid, TextField, IconButton, Collapse } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
     const auth = getAuth();
@@ -24,7 +24,17 @@ const Login = () => {
 
     //Error from server side
 
-    const [wrongIdPass, setWrongIdPass] = useState()
+    const [wrongIdPass, setWrongIdPass] = useState('');
+
+    //public(ignore)
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/home')
+            }
+        });
+
+    }, [])
 
 
 

@@ -121,6 +121,15 @@ ol {
     border: 1px solid #a5a3a3;
     border-radius: 10px;
     text-align: center;
+    cursor: pointer;
+}
+
+.login .login-form .social-login .googleLogin:hover {
+    background: rgb(38, 0, 255);
+}
+
+.login .login-form .social-login .googleLogin:hover p {
+    color: aliceblue;
 }
 
 .login .login-form .social-login p {
@@ -1111,6 +1120,109 @@ ol {
     padding: 3px;
 }
 
+/* NOTIFICATION */
+.notifications {
+    border: 0;
+    /* padding: 10px 15px; */
+    width: 96%;
+    border-radius: 20px;
+    height: 660px;
+    margin-top: 20px;
+
+    -webkit-box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+    -moz-box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+    box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+}
+
+.notifications .top-part {
+    padding: 10px 0;
+    text-align: center;
+    background: rgb(160, 160, 160);
+    border-radius: 20px 20px 0 0;
+}
+
+.notifications .top-part h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    color: whitesmoke
+}
+
+.notifications .notification-contents {
+    padding: 30px;
+    height: 580px;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+/* SETTIGNS */
+.profile-settigns {
+    border: 0;
+    padding: 20px 20px;
+    width: 100%;
+    border-radius: 20px;
+    height: 660px;
+    margin-top: 20px;
+
+    -webkit-box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+    -moz-box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+    box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.44);
+}
+
+.profile-settigns h5 {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.profile-settigns .profile-title {
+    padding: 10px 5px;
+    margin-top: 20px;
+    border-bottom: 2px solid rgb(189, 188, 188);
+    display: flex;
+    gap: 25px;
+}
+
+.profile-settigns .profile-title .profile-image {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.profile-settigns .profile-title .profile-name h3 {
+    font-family: Poppins;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.profile-settigns .profile-title .profile-name p {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.profile-settigns .psettigns-list {
+    margin-top: 30px;
+}
+
+.profile-settigns .psettigns-list ul li {
+    margin: 10px 0;
+    display: flex;
+    gap: 50px;
+    cursor: pointer;
+}
+
+.profile-settigns .psettigns-list ul li .icon {
+    width: 35px;
+    height: auto;
+}
+
+.profile-settigns .psettigns-list ul li p {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 2;
+}
+
 /* RESET PASSWORD */
 .reset-pass {
     height: 100vh;
@@ -1166,6 +1278,18 @@ ol {
     font-weight: 600;
     color: #F1F1F1;
 }
+
+/* NOT FOUND */
+.not-found {
+    text-align: center;
+}
+
+.not-found img {
+    margin: 50px 0;
+    width: 40%;
+    height: auto;
+}
+
 
 /* DARK MODE */
 .darkmode {

@@ -66,6 +66,14 @@ const GroupList = () => {
             senderName: auth.currentUser.displayName,
             senderPhoto: auth.currentUser.photoURL
         })
+        //notifications
+        set(push(ref(db, 'notifications/' + 'groupReq')), {
+            groupId: groupId,
+            adminId: adminId,
+            senderId: auth.currentUser.uid,
+            senderName: auth.currentUser.displayName,
+            senderPhoto: auth.currentUser.photoURL
+        })
     }
 
     //Frtch Group Members

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { activeChat } from '../../Redux/chatSlice';
 
 const FriendList = (props) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const db = getDatabase();
     const auth = getAuth();
     const [friendList, setFriendList] = useState([]);
